@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    ORIGIN,
+    origin: ORIGIN,
     methods: ['GET', 'POST'],
     credentials: true,
   })
