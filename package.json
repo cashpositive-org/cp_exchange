@@ -1,0 +1,31 @@
+{
+  "name": "cp-exchange",
+  "version": "1.0.0",
+  "description": "A small fullstack MERN application",
+  "private": true,
+  "scripts": {
+    "lerna:init": "lerna init",
+    "start": "lerna exec -- npm start",
+    "purge": "lerna exec -- rm -rf ./node_modules",
+    "db": "run-rs -v 4.0.4 --keep",
+    "db:d": "run-rs --mongod --keep"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "cashpositive",
+    "exchange",
+    "mern",
+    "mongo transactions"
+  ],
+  "author": "Soumyajit Pathak",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^3.15.0",
+    "run-rs": "^0.5.2",
+    "yarn": "^1.16.0"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/drenther/cp-exchange"
+}

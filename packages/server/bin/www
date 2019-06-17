@@ -1,0 +1,46 @@
+const http = require('http');
+const debug = require('debug');
+
+const app = require('../app');
+const { SERVER_NAMESPACE, PORT } = require('../utils/config');
+const { connectDB, handleConnectionFailure } = require('../utils/connectMongo');
+
+debug(SERVER_NAMESPACE);
+
+connectDB()
+  .then(() => {
+    app.set(PORT);
+
+    const server = http.createServer(app);
+
+    function onError(error) {
+      if (error.syscall !== 'listen') {
+        throw error;
+      }
+
+      const bind = typeof PORT === 'string' ? `Pipe ${PORT}` : `PORT ${PORT}`;
+
+      switch (error.code) {
+        case 'EACCES':
+          console.error(`${bind} requires elevated privileges`);
+          process.exit(1);
+        case 'EADDRINUSE':
+          console.error(`${bind} is already in use`);
+          process.exit(1);
+        default:
+          throw error;
+      }
+    }
+
+    function onListening() {
+      const address = server.address();
+      const bind = typeof address === 'string' ? `Pipe ${address}` : `Port ${address.port}`;
+
+      console.log(`Listening on ${bind}`);
+    }
+
+    server.listen(PORT);
+    server.on('error', onError);
+    server.on('listening', onListening);
+  })
+  .catch(handleConnectionFailure);

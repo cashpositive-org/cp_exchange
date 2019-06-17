@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "backend template with Express and Mongo",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "currency.js": "^1.2.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.0",
+    "mongoose-transact-utils": "^0.1.2",
+    "socket.io": "^2.2.0",
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.0.0",
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "start:prod": "node /bin/www",
+    "dev": "nodemon -r dotenv/config ./bin/www",
+    "dev:local": "yarn dev -- dotenv_config_path=./env/.env.local",
+    "start": "yarn dev:local"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
