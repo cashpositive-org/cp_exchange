@@ -6,7 +6,7 @@
   "scripts": {
     "lerna:init": "lerna init",
     "build:client": "lerna exec --scope client -- yarn build",
-    "start": "lerna exec -- npm start",
+    "start": "lerna exec -- yarn start",
     "purge": "lerna exec -- rm -rf ./node_modules",
     "db": "run-rs -v 4.0.4 --keep",
     "db:d": "run-rs --mongod --keep"
