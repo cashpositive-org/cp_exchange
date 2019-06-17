@@ -1,1 +1,1 @@
-web: cd packages/server && node ./bin/www
+web: node ./packages/server/bin/www
