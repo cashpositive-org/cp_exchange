@@ -20,7 +20,6 @@
     "nodemon": "^1.19.1"
   },
   "scripts": {
-    "start:prod": "node /bin/www",
     "dev": "nodemon -r dotenv/config ./bin/www",
     "dev:local": "yarn dev -- dotenv_config_path=./env/.env.local",
     "start": "yarn dev:local"

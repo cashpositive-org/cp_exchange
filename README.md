@@ -29,3 +29,4 @@ It uses a monorepo architecture for source control. It uses yarn workspaces and 
         |-- app.js
         |-- package.json
         |-- README.md
+```
