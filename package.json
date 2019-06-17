@@ -10,6 +10,10 @@
     "db": "run-rs -v 4.0.4 --keep",
     "db:d": "run-rs --mongod --keep"
   },
+  "engines": {
+    "node": "^10",
+    "yarn": "^1.16.0"
+  },
   "workspaces": [
     "packages/*"
   ],
