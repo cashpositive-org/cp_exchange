@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 
-import { fetchTestData } from '../core/services';
+import { fetchTestData } from '../core/api';
 
 function Test() {
   const [{ response, loading }, setState] = useState({ response: '', loading: false });

@@ -4,6 +4,7 @@ const debug = require('debug');
 const app = require('../app');
 const { SERVER_NAMESPACE, PORT } = require('../utils/config');
 const { connectDB, handleConnectionFailure } = require('../utils/connectMongo');
+const logger = require('../utils/logger');
 
 debug(SERVER_NAMESPACE);
 
@@ -22,10 +23,10 @@ connectDB()
 
       switch (error.code) {
         case 'EACCES':
-          console.error(`${bind} requires elevated privileges`);
+          logger.error(`${bind} requires elevated privileges`);
           process.exit(1);
         case 'EADDRINUSE':
-          console.error(`${bind} is already in use`);
+          logger.error(`${bind} is already in use`);
           process.exit(1);
         default:
           throw error;
@@ -36,7 +37,7 @@ connectDB()
       const address = server.address();
       const bind = typeof address === 'string' ? `Pipe ${address}` : `Port ${address.port}`;
 
-      console.log(`Listening on ${bind}`);
+      logger.info(`Listening on ${bind}`);
     }
 
     server.listen(PORT);

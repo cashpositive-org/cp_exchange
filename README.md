@@ -16,6 +16,9 @@ It uses a monorepo architecture for source control. It uses yarn workspaces and 
     |-- client
     |   |-- public
     |   |-- src
+    |   |   |-- components
+    |   |   |-- core
+            |   |-- api
     |   |-- package.json
     |   |-- README.md
     |-- server
@@ -23,6 +26,7 @@ It uses a monorepo architecture for source control. It uses yarn workspaces and 
         |-- bin
             |-- www
         |-- controllers
+        |-- models
         |-- lib
         |-- helpers
         |-- utils
