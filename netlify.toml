@@ -2,4 +2,4 @@
   base = "packages/client"
   command = "yarn build"
   publish = "packages/client/build"
-  environemnt = { YARN_VERSION = "1.16.0" }
+  environment = { YARN_VERSION = "1.16.0" }
