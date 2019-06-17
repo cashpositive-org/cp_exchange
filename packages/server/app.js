@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const compression = require('compression');
 
 const { ORIGIN } = require('./utils/config');
 const routes = require('./controllers');
@@ -17,6 +18,7 @@ app.use(
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(compression());
 
 app.use('/api', routes);
 app.use('/api', (req, res) => {

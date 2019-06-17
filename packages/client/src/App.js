@@ -2,6 +2,8 @@ import React from 'react';
 
 import logo from './logo.png';
 
+import Test from './components/Test';
+
 function App() {
   return (
     <div className="app">
@@ -10,6 +12,7 @@ function App() {
       </header>
       <main className="app-main">
         <p>A Demo MERN App - CP Exchange</p>
+        <Test />
       </main>
       <footer className="app-footer">
         <a href="https://www.cashpositive.in" target="_blank" rel="noopener noreferrer">

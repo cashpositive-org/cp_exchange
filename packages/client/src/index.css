@@ -53,3 +53,18 @@ code {
   bottom: 0;
   z-index: 2;
 }
+
+button {
+  margin: 5px 0;
+  padding: 5px;
+
+  border: solid 1px #444;
+  border-radius: 2px;
+}
+
+code {
+  margin: 10px 0;
+  background: #eee;
+  border-radius: 4px;
+  padding: 5px;
+}

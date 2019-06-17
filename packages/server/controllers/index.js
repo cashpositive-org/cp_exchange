@@ -1,9 +1,9 @@
 const express = require('express');
 
-const placeholderRoutes = require('./placeholder.js');
+const testRoutes = require('./test');
 
 const router = express.Router();
 
-router.use('/placeholder', placeholderRoutes);
+router.use('/test', testRoutes);
 
 module.exports = router;
