@@ -18,13 +18,13 @@ It uses a monorepo architecture for source control. It uses yarn workspaces and 
     |   |-- src
     |   |   |-- components
     |   |   |-- core
-            |   |-- api
+    |   |   |-- utils
     |   |-- package.json
     |   |-- README.md
     |-- server
         |-- env
         |-- bin
-            |-- www
+        |   |-- www
         |-- controllers
         |-- models
         |-- lib
