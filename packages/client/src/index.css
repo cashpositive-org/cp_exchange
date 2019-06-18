@@ -33,9 +33,9 @@ code {
   justify-content: center;
 }
 
-.app-header,
-.app-footer,
-.app-main {
+/* header,
+footer,
+main {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -67,4 +67,4 @@ code {
   background: #eee;
   border-radius: 4px;
   padding: 5px;
-}
+} */

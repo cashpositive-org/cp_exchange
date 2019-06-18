@@ -9,8 +9,10 @@ const router = express.Router();
 async function executeTransfer(req, res) {
   const validationError = validationResult(req);
 
-  if (!validationError.empty()) {
-    return res.status(422).json({ error: validationError.array().join('\n') });
+  if (!validationError.isEmpty()) {
+    return res.status(422).json({
+      error: validationError.array(),
+    });
   }
 
   try {
@@ -39,3 +41,5 @@ router.post(
   ],
   executeTransfer
 );
+
+module.exports = router;

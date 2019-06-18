@@ -9,22 +9,25 @@ const router = express.Router();
 async function createNewAccount(req, res) {
   const validationError = validationResult(req);
 
-  if (!validationError.empty()) {
-    return res.status(422).json({ error: validationError.array().join('\n') });
+  if (!validationError.isEmpty()) {
+    return res.status(422).json({
+      error: validationError.array(),
+    });
   }
 
   try {
     const { status, body } = await accountLib.createNewAccount(req.body.name);
 
-    if (status === 200) {
+    if (status === 201) {
       res.cookie('id', body._id, {
-        secure: true,
         httpOnly: true,
         expires: new Date(Date.now() + 100000000),
       });
     }
 
     res.status(status).json(body);
+
+    logger.info('Create New Account', { status, body });
   } catch (err) {
     const error = 'Failed to create a new account';
 
@@ -39,12 +42,14 @@ async function createNewAccount(req, res) {
 async function getAccountDetails(req, res) {
   const validationError = validationResult(req);
 
-  if (!validationError.empty()) {
-    return res.status(401).json({ error: validationError.array().join('\n') });
+  if (!validationError.isEmpty()) {
+    return res.status(401).json({
+      error: validationError.array(),
+    });
   }
 
   try {
-    const { status, body } = await accountLib.getAccountDetails(req.cookies.accountId);
+    const { status, body } = await accountLib.getAccountDetails(req.cookies.id);
     res.status(status).json(body);
   } catch (err) {
     const error = 'Failed to fetch the account details';

@@ -13,15 +13,13 @@ async function createNewAccount(name) {
 }
 
 async function getAccountDetails(accountId) {
-  const user = await Account.findById(accountId)
-    .lean()
-    .exec();
+  const account = await Account.findById(accountId).exec();
 
-  if (!user) {
+  if (!account) {
     return { status: 401, body: { error: 'Invalid Account ID provided' } };
   }
 
-  return { status: 200, body: user };
+  return { status: 200, body: account.toObject() };
 }
 
 module.exports = {

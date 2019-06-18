@@ -6,6 +6,7 @@ const compression = require('compression');
 
 const { ORIGIN } = require('./utils/config');
 const routes = require('./controllers');
+const logger = require('./utils/logger');
 
 const app = express();
 
@@ -21,6 +22,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(compression());
+
+app.use('*', (req, res, next) => {
+  logger.info(req.path, {
+    body: req.body,
+    params: req.params,
+    method: req.method,
+  });
+
+  next();
+});
 
 app.use('/api', routes);
 app.use('/api', (req, res) => {
