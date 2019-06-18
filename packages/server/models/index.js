@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
-const testSchema = require('./test');
+const accountSchema = require('./account');
+const transferSchema = require('./transfer');
 
 const exportModels = {
-  Test: mongoose.model('Test', testSchema),
+  Account: mongoose.model('Account', accountSchema),
+  Transfer: mongoose.model('Transfer', transferSchema),
 };
 
 Object.values(exportModels).forEach(model => {
