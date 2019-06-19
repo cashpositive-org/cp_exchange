@@ -1,4 +1,4 @@
-# cp-exchange
+# cp_exchange
 
 This is a fullstack MERN application that demonstrates the usage of MongoDB transactions.
 

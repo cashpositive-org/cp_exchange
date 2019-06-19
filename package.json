@@ -1,5 +1,5 @@
 {
-  "name": "cp-exchange",
+  "name": "cp_exchange",
   "version": "1.0.0",
   "description": "A small fullstack MERN application",
   "private": true,
