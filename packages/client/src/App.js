@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Notification from './components/Notification';
 
+import { getBaseUrl } from './utils/api';
 import { getAccountDetails, createAccount } from './core/account';
 
 const styles = {
@@ -40,7 +41,7 @@ class App extends React.Component {
   componentDidUpdate() {
     if (this.state.account && !this.state.socketConnected) {
       try {
-        const socket = io('http://localhost:2000', {
+        const socket = io(getBaseUrl(), {
           query: {
             id: this.state.account._id,
           },

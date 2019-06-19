@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-function getBaseUrl() {
+export function getBaseUrl() {
   if (process.env.NODE_ENV !== 'production') {
-    return 'http://localhost:2000/api';
+    return 'http://localhost:2000';
   }
 
-  return 'https://cp-exchange-test.herokuapp.com/api';
+  return 'https://cp-exchange-test.herokuapp.com';
 }
 
 export const apiService = axios.create({
