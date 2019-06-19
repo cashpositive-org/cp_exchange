@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const compression = require('compression');
+const io = require('socket.io')(); // add { transports: ['websockets'] } if you want to force websockets only
 
 const { ORIGIN } = require('./utils/config');
 const routes = require('./controllers');
 const logger = require('./utils/logger');
+const setupIO = require('./io');
 
 const app = express();
 
@@ -28,6 +30,7 @@ app.use('*', (req, res, next) => {
     body: req.body,
     params: req.params,
     method: req.method,
+    cookies: req.cookies,
   });
 
   next();
@@ -40,4 +43,9 @@ app.use('/api', (req, res) => {
   });
 });
 
-module.exports = app;
+setupIO(io);
+
+module.exports = {
+  app,
+  io,
+};

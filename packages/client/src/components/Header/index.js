@@ -4,6 +4,8 @@ import { AppBar, Grid, Toolbar, Typography, withStyles } from '@material-ui/core
 
 import AccountForm from './AccountForm';
 
+import { localeFormatAmount } from '../../utils/format';
+
 import logo from './../../logo.png';
 
 const styles = {
@@ -26,7 +28,14 @@ function Header({ createAccount, classes, account, accountLoading }) {
           {!accountLoading ? (
             <>
               {!account && <AccountForm createAccount={createAccount} />}
-              {account && <Typography variant="body2">Welcome, {account.name}</Typography>}
+              {account && (
+                <>
+                  <Typography variant="caption">
+                    Balance - {localeFormatAmount(account.balance.$numberDecimal)}
+                  </Typography>
+                  <Typography variant="body2">Welcome, {account.name}</Typography>
+                </>
+              )}
             </>
           ) : (
             <Typography variant="body1">Loading...</Typography>

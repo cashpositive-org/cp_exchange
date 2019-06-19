@@ -37,7 +37,7 @@ router.post(
   [
     cookie('id', 'Invalid Payer ID').isMongoId(),
     body('payee', 'Invalid Payee ID').isMongoId(),
-    body('amount', 'Invalid Amount').isCurrency({ symbol: '', digits_after_decimal: [1, 2] }),
+    body('amount', 'Invalid Amount').custom(value => ['10', '20', '30'].includes(value)),
   ],
   executeTransfer
 );

@@ -1,7 +1,7 @@
 const http = require('http');
 const debug = require('debug');
 
-const app = require('../app');
+const { app, io } = require('../app');
 const { SERVER_NAMESPACE, PORT } = require('../utils/config');
 const { connectDB, handleConnectionFailure } = require('../utils/connectMongo');
 const logger = require('../utils/logger');
@@ -13,6 +13,8 @@ connectDB()
     app.set(PORT);
 
     const server = http.createServer(app);
+
+    io.attach(server);
 
     function onError(error) {
       if (error.syscall !== 'listen') {

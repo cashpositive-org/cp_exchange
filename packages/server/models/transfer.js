@@ -15,7 +15,7 @@ const transferSchema = new Schema(
     amount: {
       type: Schema.Types.Decimal128,
       min: 0,
-      get: value => value.toString(),
+      get: value => value.toString().$numberDecimal,
     },
   },
   {
