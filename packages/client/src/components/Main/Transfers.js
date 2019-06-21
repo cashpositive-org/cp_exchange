@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Paper, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { TrendingDown, TrendingUp, TrendingFlat } from '@material-ui/icons';
+import { TrendingDown, TrendingUp } from '@material-ui/icons';
 
-import { localeFormatAmount, localeFormatTime } from '../../utils/format';
+import { getTransferMessage, localeFormatTime } from '../../utils/format';
 
 function Transfers({ transfers, account }) {
   return (
@@ -12,20 +12,14 @@ function Transfers({ transfers, account }) {
         {transfers.map(transfer => (
           <ListItem key={transfer._id} dense>
             <ListItemIcon>
-              {[transfer.payee._id, transfer.payer._id].includes(account._id) ? (
-                <>
-                  {transfer.payee._id === account._id && <TrendingUp color="primary" />}
-                  {transfer.payer._id === account._id && <TrendingDown color="error" />}
-                </>
+              {transfer.payee._id === account._id ? (
+                <TrendingUp color="primary" />
               ) : (
-                <TrendingFlat color="inherit" />
+                <TrendingDown color="error" />
               )}
             </ListItemIcon>
             <ListItemText
-              primary={`${transfer.payee.name} received ${localeFormatAmount(
-                transfer.amount.$numberDecimal
-              )} from 
-            ${transfer.payer.name}`}
+              primary={getTransferMessage(transfer, account._id)}
               secondary={localeFormatTime(transfer.createdAt)}
             />
           </ListItem>
