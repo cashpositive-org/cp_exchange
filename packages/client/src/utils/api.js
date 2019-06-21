@@ -5,7 +5,7 @@ export function getBaseUrl() {
     return 'http://localhost:2000';
   }
 
-  return 'https://cp-exchange-test.herokuapp.com';
+  return 'https://cp-exchange.herokuapp.com';
 }
 
 export const apiService = axios.create({
