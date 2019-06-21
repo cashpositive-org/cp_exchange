@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, withStyles } from '@material-ui/core';
+import { Grid, withStyles, CircularProgress } from '@material-ui/core';
 import io from 'socket.io-client';
 
 import Header from './components/Header';
@@ -8,17 +8,30 @@ import Main from './components/Main';
 import Notification from './components/Notification';
 
 import { getBaseUrl } from './utils/api';
+import { getTransferMessage } from './utils/format';
 import { getAccountDetails, createAccount } from './core/account';
 
 const styles = {
   root: {
     flexGrow: 1,
+    position: 'relative',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999,
+    top: 250,
   },
 };
 
 class App extends React.Component {
   static propTypes = {
-    classes: PropTypes.shape({ root: PropTypes.string }).isRequired,
+    classes: PropTypes.shape({ root: PropTypes.string, loadingContainer: PropTypes.string })
+      .isRequired,
   };
 
   state = {
@@ -39,11 +52,13 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.account && !this.state.socketConnected) {
+    const { account, socketConnected } = this.state;
+
+    if (account && !socketConnected) {
       try {
         const socket = io(getBaseUrl(), {
           query: {
-            id: this.state.account._id,
+            id: account._id,
           },
         });
 
@@ -52,20 +67,29 @@ class App extends React.Component {
           this.setState({ accounts, transfers });
         });
 
-        socket.on('new_account', accounts => {
-          this.setState({ accounts: JSON.parse(accounts) });
+        socket.on('new_account', account => {
+          this.setState(state => ({ accounts: [JSON.parse(account), ...state.accounts] }));
+
+          this.showNotification({ variant: 'success', message: 'New user added' });
         });
 
         socket.on('account_update', account => {
           this.setState({ account: JSON.parse(account) });
         });
 
-        socket.on('new_transfer', transfers => {
-          this.setState({ transfers: JSON.parse(transfers) });
+        socket.on('new_transfer', transfer => {
+          this.setState(state => ({ transfers: [JSON.parse(transfer), ...state.transfers] }));
+
+          this.showNotification({
+            variant: 'info',
+            message: getTransferMessage(transfer, account._id),
+          });
         });
 
         this.setState({ socketConnected: true });
       } catch (err) {
+        this.showNotification({ variant: 'error', message: 'Error happened!' });
+
         console.error(err);
       }
     }
@@ -91,7 +115,13 @@ class App extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Header {...{ account, accountLoading }} createAccount={this.createAccount} />
-          <Main {...{ account, accountLoading, accounts, transfers }} />
+          {!accountLoading && accounts.length + transfers.length === 0 ? (
+            <div className={classes.loadingContainer}>
+              <CircularProgress variant="indeterminate" />
+            </div>
+          ) : (
+            <Main {...{ account, accountLoading, accounts, transfers }} />
+          )}
           <Notification
             open={notification.open}
             message={notification.message}

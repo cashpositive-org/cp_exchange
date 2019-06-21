@@ -8,21 +8,61 @@ import {
   ListItemText,
   ButtonGroup,
   Button,
+  CircularProgress,
+  TextField,
+  withStyles,
 } from '@material-ui/core';
-import { Person } from '@material-ui/icons';
+import { Person, Search } from '@material-ui/icons';
 
 import { makeATransfer } from '../../core/transfer';
 
 const initialState = {
   selectedPayee: null,
+  searchQuery: '',
+  visiblePayees: [],
   transferring: false,
+};
+
+const styles = {
+  search: {
+    margin: 10,
+  },
+  paper: {
+    position: 'relative',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    top: 0,
+  },
 };
 
 class Accounts extends React.Component {
   static propTypes = {
     accounts: PropTypes.arrayOf(PropTypes.object).isRequired,
     account: PropTypes.object.isRequired,
+    classes: PropTypes.shape({
+      paper: PropTypes.string,
+      loadingContainer: PropTypes.string,
+      search: PropTypes.string,
+    }).isRequired,
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.accounts.length === 0) return null;
+
+    return {
+      visiblePayees: props.accounts.filter(account =>
+        account.name.includes(state.searchQuery.toLowerCase())
+      ),
+    };
+  }
 
   state = initialState;
 
@@ -38,19 +78,39 @@ class Accounts extends React.Component {
     this.setState({ selectedPayee: id });
   };
 
+  updateSearchQuery = event => {
+    this.setState({ searchQuery: event.target.value });
+  };
+
   render() {
-    const { accounts } = this.props;
-    const { selectedPayee, transferring } = this.state;
+    const { classes } = this.props;
+    const { selectedPayee, transferring, searchQuery, visiblePayees } = this.state;
 
     return (
-      <Paper>
+      <Paper className={classes.paper}>
+        <TextField
+          fullWidth
+          className={classes.search}
+          value={searchQuery}
+          onChange={this.updateSearchQuery}
+          label="Search"
+        />
         <List>
-          {accounts.map(_account => (
-            <ListItem key={_account._id} dense button onClick={this.selectPayee(_account._id)}>
+          {visiblePayees.map(_account => (
+            <ListItem
+              key={_account._id}
+              dense
+              button
+              disabled={transferring}
+              onClick={this.selectPayee(_account._id)}
+            >
               <ListItemIcon>
                 <Person color={selectedPayee === _account._id ? 'primary' : 'inherit'} />
               </ListItemIcon>
-              <ListItemText primary={_account.name} />
+              <ListItemText
+                primary={_account.name}
+                style={{ fontWeight: selectedPayee === _account._id ? 'bold' : 'inherit' }}
+              />
             </ListItem>
           ))}
         </List>
@@ -66,9 +126,15 @@ class Accounts extends React.Component {
             Pay 30
           </Button>
         </ButtonGroup>
+
+        {transferring && (
+          <div className={classes.loadingContainer}>
+            <CircularProgress variant="indeterminate" color="primary" />
+          </div>
+        )}
       </Paper>
     );
   }
 }
 
-export default Accounts;
+export default withStyles(styles)(Accounts);

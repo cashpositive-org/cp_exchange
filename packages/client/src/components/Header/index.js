@@ -30,10 +30,10 @@ function Header({ createAccount, classes, account, accountLoading }) {
               {!account && <AccountForm createAccount={createAccount} />}
               {account && (
                 <>
-                  <Typography variant="caption">
+                  <Typography variant="h5">
                     Balance - {localeFormatAmount(account.balance.$numberDecimal)}
                   </Typography>
-                  <Typography variant="body2">Welcome, {account.name}</Typography>
+                  <Typography variant="h5">Welcome, {account.name}</Typography>
                 </>
               )}
             </>
