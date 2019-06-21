@@ -11,7 +11,6 @@ import {
   CircularProgress,
   TextField,
   withStyles,
-  Tooltip,
 } from '@material-ui/core';
 import { Person } from '@material-ui/icons';
 
@@ -84,8 +83,8 @@ class Accounts extends React.Component {
     const { classes, account } = this.props;
     const { selectedPayee, transferring, searchQuery, visiblePayees } = this.state;
 
-    const lowBalance = Number(account.balance.$numberDecimal) < 10;
-    const payDisabled = selectedPayee || transferring || lowBalance;
+    const lowBalance = amount => Number(account.balance.$numberDecimal) < amount;
+    const payDisabled = !selectedPayee || transferring;
 
     return (
       <Paper className={classes.paper}>
@@ -110,19 +109,17 @@ class Accounts extends React.Component {
           ))}
         </List>
 
-        <Tooltip title="You do not have enough balance!" open={lowBalance}>
-          <ButtonGroup fullWidth>
-            <Button onClick={this.makeATransfer('10')} disabled={payDisabled}>
-              Pay 10
-            </Button>
-            <Button onClick={this.makeATransfer('20')} disabled={payDisabled}>
-              Pay 20
-            </Button>
-            <Button onClick={this.makeATransfer('30')} disabled={payDisabled}>
-              Pay 30
-            </Button>
-          </ButtonGroup>
-        </Tooltip>
+        <ButtonGroup fullWidth>
+          <Button onClick={this.makeATransfer('10')} disabled={payDisabled || lowBalance(10)}>
+            Pay 10
+          </Button>
+          <Button onClick={this.makeATransfer('20')} disabled={payDisabled || lowBalance(20)}>
+            Pay 20
+          </Button>
+          <Button onClick={this.makeATransfer('30')} disabled={payDisabled || lowBalance(30)}>
+            Pay 30
+          </Button>
+        </ButtonGroup>
 
         {transferring && (
           <div className={classes.loadingContainer}>
