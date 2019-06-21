@@ -11,6 +11,7 @@ import {
   CircularProgress,
   TextField,
   withStyles,
+  Tooltip,
 } from '@material-ui/core';
 import { Person } from '@material-ui/icons';
 
@@ -24,10 +25,6 @@ const initialState = {
 };
 
 const styles = {
-  search: {
-    margin: 10,
-    marginRight: 0,
-  },
   paper: {
     position: 'relative',
   },
@@ -84,18 +81,15 @@ class Accounts extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, account } = this.props;
     const { selectedPayee, transferring, searchQuery, visiblePayees } = this.state;
+
+    const lowBalance = Number(account.balance.$numberDecimal) < 10;
+    const payDisabled = selectedPayee || transferring || lowBalance;
 
     return (
       <Paper className={classes.paper}>
-        <TextField
-          fullWidth
-          className={classes.search}
-          value={searchQuery}
-          onChange={this.updateSearchQuery}
-          label="Search"
-        />
+        <TextField fullWidth value={searchQuery} onChange={this.updateSearchQuery} label="Search" />
         <List>
           {visiblePayees.map(_account => (
             <ListItem
@@ -116,17 +110,19 @@ class Accounts extends React.Component {
           ))}
         </List>
 
-        <ButtonGroup fullWidth>
-          <Button onClick={this.makeATransfer('10')} disabled={!selectedPayee || transferring}>
-            Pay 10
-          </Button>
-          <Button onClick={this.makeATransfer('20')} disabled={!selectedPayee || transferring}>
-            Pay 20
-          </Button>
-          <Button onClick={this.makeATransfer('30')} disabled={!selectedPayee || transferring}>
-            Pay 30
-          </Button>
-        </ButtonGroup>
+        <Tooltip title="You do not have enough balance!" open={lowBalance}>
+          <ButtonGroup fullWidth>
+            <Button onClick={this.makeATransfer('10')} disabled={payDisabled}>
+              Pay 10
+            </Button>
+            <Button onClick={this.makeATransfer('20')} disabled={payDisabled}>
+              Pay 20
+            </Button>
+            <Button onClick={this.makeATransfer('30')} disabled={payDisabled}>
+              Pay 30
+            </Button>
+          </ButtonGroup>
+        </Tooltip>
 
         {transferring && (
           <div className={classes.loadingContainer}>

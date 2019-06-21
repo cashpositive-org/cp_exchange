@@ -70,7 +70,7 @@ class App extends React.Component {
         socket.on('new_account', account => {
           this.setState(state => ({ accounts: [JSON.parse(account), ...state.accounts] }));
 
-          this.showNotification({ variant: 'success', message: 'New user added' });
+          this.showNotification({ message: 'New user added' });
         });
 
         socket.on('account_update', account => {
@@ -83,14 +83,16 @@ class App extends React.Component {
           this.setState(state => ({ transfers: [transfer, ...state.transfers] }));
 
           this.showNotification({
-            variant: 'info',
             message: getTransferMessage(transfer, account._id),
           });
         });
 
         this.setState({ socketConnected: true });
       } catch (err) {
-        this.showNotification({ variant: 'error', message: 'Error happened!' });
+        this.showNotification({
+          variant: 'error',
+          message: 'Error happened with socket connections!',
+        });
 
         console.error(err);
       }
@@ -105,7 +107,7 @@ class App extends React.Component {
     this.setState({ account, accountLoading: false });
   };
 
-  showNotification = ({ variant = 'success', message }) => {
+  showNotification = ({ variant = 'info', message }) => {
     this.setState({ notification: { open: true, message, variant } });
   };
 
