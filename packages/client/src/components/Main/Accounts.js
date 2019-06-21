@@ -25,8 +25,7 @@ const initialState = {
 
 const styles = {
   search: {
-    marginTop: 10,
-    marginBottom: 10,
+    margin: 10,
   },
   paper: {
     position: 'relative',
@@ -83,10 +82,6 @@ class Accounts extends React.Component {
     this.setState({ searchQuery: event.target.value });
   };
 
-  resetSearchQuery = () => {
-    this.setState({ searchQuery: '' });
-  };
-
   render() {
     const { classes } = this.props;
     const { selectedPayee, transferring, searchQuery, visiblePayees } = this.state;
@@ -99,13 +94,6 @@ class Accounts extends React.Component {
           value={searchQuery}
           onChange={this.updateSearchQuery}
           label="Search"
-          InputProps={{
-            endAdornment: (
-              <Button variant="contained" type="submit" color="primary" disabled>
-                <Search />
-              </Button>
-            ),
-          }}
         />
         <List>
           {visiblePayees.map(_account => (
