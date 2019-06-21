@@ -50,7 +50,7 @@ function Notification({ classes, message, onClose, variant, open }) {
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={1000}
       onClose={onClose}
     >
       <SnackbarContent

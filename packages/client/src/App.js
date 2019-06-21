@@ -77,8 +77,10 @@ class App extends React.Component {
           this.setState({ account: JSON.parse(account) });
         });
 
-        socket.on('new_transfer', transfer => {
-          this.setState(state => ({ transfers: [JSON.parse(transfer), ...state.transfers] }));
+        socket.on('new_transfer', _transfer => {
+          const transfer = JSON.parse(_transfer);
+
+          this.setState(state => ({ transfers: [transfer, ...state.transfers] }));
 
           this.showNotification({
             variant: 'info',

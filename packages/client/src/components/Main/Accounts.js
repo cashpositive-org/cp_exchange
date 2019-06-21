@@ -12,7 +12,7 @@ import {
   TextField,
   withStyles,
 } from '@material-ui/core';
-import { Person, Search } from '@material-ui/icons';
+import { Person } from '@material-ui/icons';
 
 import { makeATransfer } from '../../core/transfer';
 
@@ -26,6 +26,7 @@ const initialState = {
 const styles = {
   search: {
     margin: 10,
+    marginRight: 0,
   },
   paper: {
     position: 'relative',
