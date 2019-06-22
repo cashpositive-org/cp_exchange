@@ -110,7 +110,7 @@ class App extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Header {...{ account, accountLoading }} createAccount={this.createAccount} />
-          {!accountLoading && accounts.length + transfers.length > 0 ? (
+          {!accountLoading && accounts.length + transfers.length === 0 ? (
             <div className={classes.loadingContainer}>
               <CircularProgress variant="indeterminate" />
             </div>
@@ -126,20 +126,6 @@ class App extends React.Component {
             }}
           />
         </Grid>
-
-        <a
-          className={
-            !accountLoading && Boolean(account) && accounts.length + transfers.length > 0
-              ? 'show'
-              : ''
-          }
-          target="_blank"
-          id="feedback"
-          rel="noopener noreferrer"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSdsED93r-1EihTjMMvJ39_z-VdO6HDOklKq1r1xQsM5m2zI6Q/viewform"
-        >
-          Submit Feedback
-        </a>
       </div>
     );
   }
