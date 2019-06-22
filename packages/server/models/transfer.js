@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -6,21 +6,20 @@ const transferSchema = new Schema(
   {
     payee: {
       type: Schema.Types.ObjectId,
-      ref: 'Account',
+      ref: "Account"
     },
     payer: {
       type: Schema.Types.ObjectId,
-      ref: 'Account',
+      ref: "Account"
     },
     amount: {
       type: Schema.Types.Decimal128,
-      min: 0,
-      get: value => value.toString().$numberDecimal,
-    },
+      min: 0
+    }
   },
   {
     timestamps: true,
-    usePushEach: true,
+    usePushEach: true
   }
 );
 
