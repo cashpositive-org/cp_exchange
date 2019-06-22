@@ -116,10 +116,10 @@ class App extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div className={`app ${classes.root}`}>
         <Grid container spacing={3}>
           <Header {...{ account, accountLoading }} createAccount={this.createAccount} />
-          {!accountLoading && accounts.length + transfers.length > 0 ? (
+          {!accountLoading && accounts.length + transfers.length === 0 ? (
             <div className={classes.loadingContainer}>
               <CircularProgress variant="indeterminate" />
             </div>
