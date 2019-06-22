@@ -19,7 +19,7 @@ function setupIO(io) {
 
     socket.emit('init', JSON.stringify({ accounts /*transfers*/ }));
 
-    Account.watch({ fullDocument: 'updateLookup' }).on('change', async change => {
+    Account.watch({ fullDocument: 'updateLookup' }).on('change', change => {
       if (change.operationType === 'insert') {
         socket.emit('new_account', JSON.stringify(change.fullDocument));
       }
