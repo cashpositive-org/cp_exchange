@@ -72,3 +72,22 @@ $ yarn build:client
         |-- package.json
         |-- README.md
 ```
+
+
+
+## Get in touch
+
+Nitish Mehta 
+- Twitter: [nitish_mehta](https://twitter.com/nitish_mehta)
+- LinkedIn: [nitishmehta08](https://linkedin.com/in/nitishmehta08)
+
+Soumyajit Pathak
+- Twitter: [drenther](https://twitter.com/drenther)
+- LinkedIn: [soumyajit-pathak](https://www.linkedin.com/in/soumyajit-pathak/)
+
+Sharad Chand
+- Twitter: [pepsighan](https://twitter.com/pepsighan)
+- LinkedIn: [pepsighan](https://www.linkedin.com/in/pepsighan) 
+
+### Share your thoughts
+* [Session Feedback Form Link](https://docs.google.com/forms/d/1Za7gPKT9d8CXW-o_0Ah6M64JBx6l2QbbYffrQnZZzPg/viewform)
