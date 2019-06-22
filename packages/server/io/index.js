@@ -10,14 +10,14 @@ function setupIO(io) {
       .lean()
       .exec();
 
-    const transfers = await Transfer.find({ $or: [{ payee: id }, { payer: id }] })
-      .sort('-createdAt')
-      .limit(50)
-      .populate('payee payer', '_id name')
-      .lean()
-      .exec();
+    // const transfers = await Transfer.find({ $or: [{ payee: id }, { payer: id }] })
+    //   .sort('-createdAt')
+    //   .limit(50)
+    //   .populate('payee payer', '_id name')
+    //   .lean()
+    //   .exec();
 
-    socket.emit('init', JSON.stringify({ accounts, transfers }));
+    socket.emit('init', JSON.stringify({ accounts /*transfers*/ }));
 
     Account.watch({ fullDocument: 'updateLookup' }).on('change', async change => {
       if (change.operationType === 'insert') {
@@ -29,19 +29,19 @@ function setupIO(io) {
       }
     });
 
-    Transfer.watch().on('change', async change => {
-      if (
-        change.operationType === 'insert' &&
-        (String(change.fullDocument.payee) === id || String(change.fullDocument.payer) === id)
-      ) {
-        const transfer = await Transfer.findById(change.documentKey._id)
-          .populate('payee payer', '_id name')
-          .lean()
-          .exec();
+    // Transfer.watch().on('change', async change => {
+    //   if (
+    //     change.operationType === 'insert' &&
+    //     (String(change.fullDocument.payee) === id || String(change.fullDocument.payer) === id)
+    //   ) {
+    //     const transfer = await Transfer.findById(change.documentKey._id)
+    //       .populate('payee payer', '_id name')
+    //       .lean()
+    //       .exec();
 
-        socket.emit('new_transfer', JSON.stringify(transfer));
-      }
-    });
+    //     socket.emit('new_transfer', JSON.stringify(transfer));
+    //   }
+    // });
   });
 }
 
