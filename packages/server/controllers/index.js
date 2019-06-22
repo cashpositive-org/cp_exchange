@@ -6,6 +6,6 @@ const transferRoutes = require('./transfer');
 const router = express.Router();
 
 router.use('/account', accountRoutes);
-router.use('/transfer', transferRoutes);
+// router.use('/transfer', transferRoutes);
 
 module.exports = router;

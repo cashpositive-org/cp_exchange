@@ -8,7 +8,7 @@ const io = require('socket.io')(); // add { transports: ['websockets'] } if you 
 const { ORIGIN } = require('./utils/config');
 const routes = require('./controllers');
 const logger = require('./utils/logger');
-const setupIO = require('./io');
+// const setupIO = require('./io');
 
 const app = express();
 
@@ -43,7 +43,7 @@ app.use('/api', (req, res) => {
   });
 });
 
-setupIO(io);
+// setupIO(io);
 
 module.exports = {
   app,

@@ -55,47 +55,38 @@ class App extends React.Component {
     const { account, socketConnected } = this.state;
 
     if (account && !socketConnected) {
-      try {
-        const socket = io(getBaseUrl(), {
-          query: {
-            id: account._id,
-          },
-        });
-
-        socket.on('init', response => {
-          const { accounts, transfers } = JSON.parse(response);
-          this.setState({ accounts, transfers });
-        });
-
-        socket.on('new_account', account => {
-          this.setState(state => ({ accounts: [JSON.parse(account), ...state.accounts] }));
-
-          this.showNotification({ message: 'New user added' });
-        });
-
-        socket.on('account_update', account => {
-          this.setState({ account: JSON.parse(account) });
-        });
-
-        socket.on('new_transfer', _transfer => {
-          const transfer = JSON.parse(_transfer);
-
-          this.setState(state => ({ transfers: [transfer, ...state.transfers] }));
-
-          this.showNotification({
-            message: getTransferMessage(transfer, account._id),
-          });
-        });
-
-        this.setState({ socketConnected: true });
-      } catch (err) {
-        this.showNotification({
-          variant: 'error',
-          message: 'Error happened with socket connections!',
-        });
-
-        console.error(err);
-      }
+      // try {
+      //   const socket = io(getBaseUrl(), {
+      //     query: {
+      //       id: account._id,
+      //     },
+      //   });s
+      //   socket.on('init', response => {
+      //     const { accounts, transfers } = JSON.parse(response);
+      //     this.setState({ accounts, transfers });
+      //   });
+      //   socket.on('new_account', account => {
+      //     this.setState(state => ({ accounts: [JSON.parse(account), ...state.accounts] }));
+      //     this.showNotification({ message: 'New user added' });
+      //   });
+      //   socket.on('account_update', account => {
+      //     this.setState({ account: JSON.parse(account) });
+      //   });
+      //   socket.on('new_transfer', _transfer => {
+      //     const transfer = JSON.parse(_transfer);
+      //     this.setState(state => ({ transfers: [transfer, ...state.transfers] }));
+      //     this.showNotification({
+      //       message: getTransferMessage(transfer, account._id),
+      //     });
+      //   });
+      //   this.setState({ socketConnected: true });
+      // } catch (err) {
+      //   this.showNotification({
+      //     variant: 'error',
+      //     message: 'Error happened with socket connections!',
+      //   });
+      //console.error(err);
+      //}
     }
   }
 
