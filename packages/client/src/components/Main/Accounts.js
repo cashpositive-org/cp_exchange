@@ -56,7 +56,7 @@ class Accounts extends React.Component {
 
     return {
       visiblePayees: props.accounts.filter(account =>
-        account.name.includes(state.searchQuery.toLowerCase())
+        account.name.toLowerCase().includes(state.searchQuery.toLowerCase())
       ),
     };
   }
